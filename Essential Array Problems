@@ -1,0 +1,292 @@
+📘Essential Array Problems
+
+In this video, we solved important beginner-level array problems:
+Reverse an array (2 methods)
+Find minimum & maximum
+Find second largest element
+Check if array is sorted
+Count frequency of element
+Master these before moving to Binary Search or Sliding Window.
+
+🔁 1️⃣ Reverse an Array
+✅ Method 1: Using Extra Array
+💻 C++ Code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter size: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter elements:\n";
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int rev[n];
+
+    for(int i = 0; i < n; i++) {
+        rev[i] = arr[n - 1 - i];
+    }
+
+    cout << "Reversed array:\n";
+    for(int i = 0; i < n; i++) {
+        cout << rev[i] << " ";
+    }
+
+    return 0;
+}
+
+🐍 Python Code
+n = int(input("Enter size: "))
+arr = list(map(int, input("Enter elements: ").split()))
+
+rev = [0] * n
+
+for i in range(n):
+    rev[i] = arr[n - 1 - i]
+
+print("Reversed array:", rev)
+
+⏱ Complexity
+Time: O(n)
+Space: O(n)
+
+✅ Method 2: Two-Pointer (Optimal – In-place)
+💻 C++ Code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int arr[n];
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int left = 0;
+    int right = n - 1;
+
+    while(left < right) {
+        swap(arr[left], arr[right]);
+        left++;
+        right--;
+    }
+
+    for(int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+
+    return 0;
+}
+
+🐍 Python Code
+n = int(input())
+arr = list(map(int, input().split()))
+
+left = 0
+right = n - 1
+
+while left < right:
+    arr[left], arr[right] = arr[right], arr[left]
+    left += 1
+    right -= 1
+
+print(arr)
+
+⏱ Complexity
+Time: O(n)
+Space: O(1)
+
+📉 2️⃣ Find Minimum & Maximum in Array
+💻 C++ Code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    if(n == 0) {
+        cout << "Array is empty";
+        return 0;
+    }
+
+    int arr[n];
+    for(int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int minimum = arr[0];
+    int maximum = arr[0];
+
+    for(int i = 1; i < n; i++) {
+        if(arr[i] < minimum)
+            minimum = arr[i];
+
+        if(arr[i] > maximum)
+            maximum = arr[i];
+    }
+
+    cout << "Min: " << minimum << endl;
+    cout << "Max: " << maximum << endl;
+
+    return 0;
+}
+
+🐍 Python Code
+n = int(input())
+arr = list(map(int, input().split()))
+
+if n == 0:
+    print("Empty array")
+else:
+    minimum = arr[0]
+    maximum = arr[0]
+
+    for i in range(1, n):
+        if arr[i] < minimum:
+            minimum = arr[i]
+        if arr[i] > maximum:
+            maximum = arr[i]
+
+    print("Min:", minimum)
+    print("Max:", maximum)
+
+⏱ Complexity
+Time: O(n)
+Space: O(1)
+
+🥈 3️⃣ Find Second Largest Element
+
+⚠ Edge case: If all elements are equal, second largest does not exist.
+
+💻 C++ Code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int arr[n];
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    if(n < 2) {
+        cout << "Second largest not possible";
+        return 0;
+    }
+
+    int largest = arr[0];
+    int secondLargest = -1;
+
+    for(int i = 1; i < n; i++) {
+        if(arr[i] > largest) {
+            secondLargest = largest;
+            largest = arr[i];
+        }
+        else if(arr[i] > secondLargest && arr[i] != largest) {
+            secondLargest = arr[i];
+        }
+    }
+
+    if(secondLargest == -1)
+        cout << "No second largest element";
+    else
+        cout << "Second Largest: " << secondLargest;
+
+    return 0;
+}
+
+🐍 Python Code
+n = int(input())
+arr = list(map(int, input().split()))
+
+if n < 2:
+    print("Second largest not possible")
+else:
+    largest = arr[0]
+    second = -1
+
+    for i in range(1, n):
+        if arr[i] > largest:
+            second = largest
+            largest = arr[i]
+        elif arr[i] > second and arr[i] != largest:
+            second = arr[i]
+
+    if second == -1:
+        print("No second largest element")
+    else:
+        print("Second Largest:", second)
+
+✅ 4️⃣ Check if Array is Sorted
+💻 C++ Code
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int arr[n];
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    bool sorted = true;
+
+    for(int i = 1; i < n; i++) {
+        if(arr[i] < arr[i-1]) {
+            sorted = false;
+            break;
+        }
+    }
+
+    if(sorted)
+        cout << "Array is sorted";
+    else
+        cout << "Not sorted";
+
+    return 0;
+}
+
+🐍 Python Code
+n = int(input())
+arr = list(map(int, input().split()))
+
+is_sorted = True
+
+for i in range(1, n):
+    if arr[i] < arr[i-1]:
+        is_sorted = False
+        break
+
+print("Sorted" if is_sorted else "Not sorted")
+
+➕ 5️⃣ Bonus: Count Frequency of an Element
+💻 C++ Code
+int key;
+cin >> key;
+
+int count = 0;
+
+for(int i = 0; i < n; i++) {
+    if(arr[i] == key)
+        count++;
+}
+
+cout << "Frequency: " << count;
+
+⚠️ Common Beginner Mistakes
+Using i <= n instead of i < n
+Accessing arr[n]
+Not handling empty array
+Forgetting break
+Not checking duplicates in second largest
+
+Confusing index with value
