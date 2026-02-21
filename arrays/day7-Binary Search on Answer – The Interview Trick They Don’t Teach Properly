@@ -1,3 +1,5 @@
+CPP-
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -74,3 +76,72 @@ int main() {
 
     return 0;
 }
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+PYTHON-
+
+Problems Covered:
+1. Floor Square Root
+2. Allocate Books
+"""
+
+# 1️⃣ Floor Square Root
+def floor_sqrt(n):
+    low, high = 0, n
+    ans = 0
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if mid * mid <= n:
+            ans = mid
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return ans
+
+
+# 2️⃣ Allocate Books
+def is_possible(books, students, max_pages):
+    count = 1
+    pages = 0
+
+    for book in books:
+        if book > max_pages:
+            return False
+
+        if pages + book > max_pages:
+            count += 1
+            pages = book
+        else:
+            pages += book
+
+    return count <= students
+
+
+def allocate_books(books, students):
+    if students > len(books):
+        return -1
+
+    low = max(books)
+    high = sum(books)
+    ans = -1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if is_possible(books, students, mid):
+            ans = mid
+            high = mid - 1
+        else:
+            low = mid + 1
+
+    return ans
+
+
+if __name__ == "__main__":
+    print("Floor sqrt of 27:", floor_sqrt(27))
+    print("Allocate Books:", allocate_books([12, 34, 67, 90], 2))
